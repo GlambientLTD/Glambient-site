@@ -158,12 +158,14 @@
 
     .hero .layered-image { aspect-ratio: 3 / 4; }
 
-    .l1 { left: 3%; top: 14%; --rot: -2.6deg; transform: rotate(-2.6deg); z-index: 2; }
-    .l2 { left: 16%; bottom: 4%; --rot: 2.3deg; transform: rotate(2.3deg); z-index: 7; }
-    .l3 { left: 34%; top: 7%; --rot: -1.7deg; transform: rotate(-1.7deg); z-index: 4; width: clamp(110px, 13vw, 215px); }
-    .l4 { right: 32%; bottom: 1%; --rot: -2.9deg; transform: rotate(-2.9deg); z-index: 3; width: clamp(110px, 14vw, 220px); }
-    .l5 { right: 8%; top: 18%; --rot: 2.2deg; transform: rotate(2.2deg); z-index: 4; }
-    .l6 { right: 2%; bottom: 6%; --rot: -1.4deg; transform: rotate(-1.4deg); z-index: 8; width: clamp(145px, 20vw, 305px); }
+    /* Left column — top, mid, bottom */
+    .l1 { left: 0%;  top: 4%;    --rot: -2.6deg; transform: rotate(-2.6deg); z-index: 3; }
+    .l2 { left: 1%;  top: 32%;   --rot:  2.3deg; transform: rotate(2.3deg);  z-index: 3; }
+    .l3 { left: 0%;  bottom: 4%; --rot: -1.7deg; transform: rotate(-1.7deg); z-index: 3; }
+    /* Right column — mirror of left */
+    .l4 { right: 0%;  top: 4%;    --rot:  2.9deg; transform: rotate(2.9deg);  z-index: 3; }
+    .l5 { right: 1%;  top: 32%;   --rot: -2.2deg; transform: rotate(-2.2deg); z-index: 3; }
+    .l6 { right: 0%;  bottom: 4%; --rot:  1.4deg; transform: rotate(1.4deg);  z-index: 3; }
 
     section {
       margin-block: var(--section-gap);
@@ -273,7 +275,7 @@
       }
 
       .l2,
-      .l6 {
+      .l5 {
         display: none;
       }
 
