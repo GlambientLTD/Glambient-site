@@ -294,10 +294,71 @@
         transition: none;
       }
     }
+
+    /* ── JESS & BEN: full landscape hero banner ───────────── */
+    .jb-banner {
+      width: 100%;
+      display: block;
+      line-height: 0;
+    }
+
+    .jb-banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ── JESS & BEN: side-by-side duo (right slightly overlaps left) ── */
+    .jb-duo-wrap {
+      padding-inline: var(--pad);
+      margin-block: var(--section-gap);
+    }
+
+    .jb-duo {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .jb-duo__left {
+      width: 55%;
+      height: auto;
+      display: block;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .jb-duo__right {
+      width: 55%;
+      height: auto;
+      display: block;
+      flex-shrink: 0;
+      margin-left: -10%;
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (max-width: 600px) {
+      .jb-duo {
+        flex-direction: column;
+      }
+
+      .jb-duo__left,
+      .jb-duo__right {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
   </style>
 </head>
 <body>
   <script src="assets/js/nav.js"></script>
+
+  <!-- ── FULL-WIDTH LANDSCAPE: JESSANDBENFINAL-05129 ──────── -->
+  <!-- Shown at natural aspect ratio — no crop or zoom applied -->
+  <div class="jb-banner">
+    <img src="images/JESSANDBENFINAL-05129.jpeg" alt="Jess and Ben wedding — couple in an outdoor landscape setting" loading="eager" decoding="async">
+  </div>
 
   <!-- ── HERO: typography only, no image overlap ────────── -->
   <header class="hero">
@@ -312,6 +373,15 @@
       <span class="line">worldwide.</span>
     </h1>
   </header>
+
+  <!-- ── DUO: JESSANDBENFINAL-208511 + JESSANDBENFINAL-209065 ── -->
+  <!-- Right image slightly overlaps left; both faces remain visible  -->
+  <div class="jb-duo-wrap">
+    <div class="jb-duo">
+      <img class="jb-duo__left" src="images/JESSANDBENFINAL-208511.jpeg" alt="Jess and Ben wedding — candid couple portrait" loading="lazy" decoding="async">
+      <img class="jb-duo__right" src="images/JESSANDBENFINAL-209065.jpeg" alt="Jess and Ben wedding — editorial couple portrait" loading="lazy" decoding="async">
+    </div>
+  </div>
 
   <!-- ── LANDSCAPE BANNER 1: full viewport width × height ─ -->
   <!--
