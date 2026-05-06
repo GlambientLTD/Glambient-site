@@ -113,7 +113,7 @@
     .hero {
       display: flex;
       align-items: flex-start;
-      padding-block: 0;
+      padding-block: var(--section-gap);
       padding-inline: var(--pad);
     }
 
@@ -144,6 +144,17 @@
       object-fit: cover;
       object-position: center;
       display: block;
+    }
+
+    /* Natural-height variant — shows the full image without cropping */
+    .full-banner--natural {
+      height: auto;
+      overflow: visible;
+    }
+
+    .full-banner--natural img {
+      height: auto;
+      object-fit: unset;
     }
 
     /* ── TEXT BREAK ───────────────────────────────────────── */
@@ -374,21 +385,13 @@
     </h1>
   </header>
 
-  <!-- ── DUO: JESSANDBENFINAL-208511 + JESSANDBENFINAL-209065 ── -->
-  <!-- Right image slightly overlaps left; both faces remain visible  -->
-  <div class="jb-duo-wrap">
-    <div class="jb-duo">
-      <img class="jb-duo__left" src="images/JESSANDBENFINAL-208511.jpeg" alt="Jess and Ben wedding — candid couple portrait" loading="lazy" decoding="async">
-      <img class="jb-duo__right" src="images/JESSANDBENFINAL-209065.jpeg" alt="Jess and Ben wedding — editorial couple portrait" loading="lazy" decoding="async">
-    </div>
+  <!-- ── FULL-WIDTH IMAGE: IMG_8464 ────────────────────────── -->
+  <div class="jb-banner">
+    <img src="images/IMG_8464.png" alt="Wedding photography" loading="lazy" decoding="async">
   </div>
 
-  <!-- ── LANDSCAPE BANNER 1: full viewport width × height ─ -->
-  <!--
-    Swap src for DSC08325.jpg / KAT&MARK-638.jpg (or any landscape
-    shot) once those files are added to the images/ folder.
-  -->
-  <div class="full-banner">
+  <!-- ── LANDSCAPE BANNER 1: full image, no crop ────────── -->
+  <div class="full-banner full-banner--natural">
     <img src="images/10-7.jpg" alt="Wedding couple — full-width editorial portrait" loading="eager" decoding="async">
   </div>
 
