@@ -82,8 +82,8 @@
       --films-purple: #ff1a5e;
       --pad: clamp(1.2rem, 4vw, 3rem);
       --gap: clamp(0.6rem, 1.4vw, 1.2rem);
-      --section-gap: clamp(3.4rem, 8.5vw, 9.5rem);
-      --text-image-gap: clamp(1.5rem, 4.2vw, 4.2rem);
+      --section-gap: clamp(2.4rem, 6.2vw, 6.8rem);
+      --text-image-gap: clamp(0.75rem, 2.2vw, 2rem);
     }
 
     * {
@@ -117,7 +117,7 @@
     .hero {
       display: flex;
       align-items: flex-start;
-      padding-block: var(--section-gap);
+      padding-block: clamp(2.2rem, 5.5vw, 6rem);
       padding-inline: var(--pad);
     }
 
@@ -186,7 +186,7 @@
     }
 
     .text-break--tight-top {
-      margin-top: clamp(0.75rem, 2vw, 1.8rem);
+      margin-top: 0;
     }
 
     .text-break--flush-bottom {
@@ -230,7 +230,7 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--gap);
-      margin-block: var(--text-image-gap);
+      margin-block: clamp(0.65rem, 2vw, 1.8rem);
     }
 
     .home-collage__item {
@@ -401,7 +401,7 @@
     /* ── JESS & BEN: side-by-side duo (right slightly overlaps left) ── */
     .jb-duo-wrap {
       padding-inline: 0;
-      margin-block: var(--section-gap);
+      margin-block: clamp(2rem, 5vw, 5rem);
     }
 
     .jb-duo {
