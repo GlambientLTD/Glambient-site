@@ -478,13 +478,13 @@
       const snippetFrame = document.getElementById("home-catherine-snippet");
       if (!snippetFrame || !window.Vimeo || !window.Vimeo.Player) return;
 
-      const startTime = 4 * 60 + 48;
+      const START_TIME_SECONDS = 288; // 4 minutes, 48 seconds
       const player = new window.Vimeo.Player(snippetFrame);
       let isSeeking = false;
 
       player.on("loaded", async () => {
         try {
-          await player.setCurrentTime(startTime);
+          await player.setCurrentTime(START_TIME_SECONDS);
           await player.play();
         } catch (err) {
           /* no-op */
@@ -493,7 +493,7 @@
 
       player.on("ended", async () => {
         try {
-          await player.setCurrentTime(startTime);
+          await player.setCurrentTime(START_TIME_SECONDS);
           await player.play();
         } catch (err) {
           /* no-op */
@@ -501,9 +501,9 @@
       });
 
       player.on("timeupdate", ({ seconds }) => {
-        if (seconds < startTime - 0.35 && !isSeeking) {
+        if (seconds < START_TIME_SECONDS - 0.35 && !isSeeking) {
           isSeeking = true;
-          player.setCurrentTime(startTime).catch(() => {}).finally(() => {
+          player.setCurrentTime(START_TIME_SECONDS).catch(() => {}).finally(() => {
             isSeeking = false;
           });
         }
