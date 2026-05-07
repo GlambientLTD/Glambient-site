@@ -479,6 +479,7 @@
       if (!snippetFrame || !window.Vimeo || !window.Vimeo.Player) return;
 
       const START_TIME_SECONDS = 288; // 4 minutes, 48 seconds
+      const SEEK_TOLERANCE_SECONDS = 0.35; // Small buffer to prevent jitter from player timing drift
       const player = new window.Vimeo.Player(snippetFrame);
       let isSeeking = false;
 
@@ -501,7 +502,7 @@
       });
 
       player.on("timeupdate", ({ seconds }) => {
-        if (seconds < START_TIME_SECONDS - 0.35 && !isSeeking) {
+        if (seconds < START_TIME_SECONDS - SEEK_TOLERANCE_SECONDS && !isSeeking) {
           isSeeking = true;
           player.setCurrentTime(START_TIME_SECONDS).catch(() => {}).finally(() => {
             isSeeking = false;
