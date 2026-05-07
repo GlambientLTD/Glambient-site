@@ -208,6 +208,28 @@
       pointer-events: none;
     }
 
+    /* ── HOMEPAGE 2X2 COLLAGE ─────────────────────────────── */
+    .home-collage {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--gap);
+      margin-block: var(--text-image-gap);
+    }
+
+    .home-collage__item {
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+    }
+
+    .home-collage__item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
     /* ── MOSAIC COLLAGE ───────────────────────────────────── */
     .mosaic {
       display: grid;
@@ -536,8 +558,19 @@
     </section>
   </div>
 
-  <div class="full-banner full-banner--natural">
-    <img src="images/IMG_8890.jpeg" alt="Wedding couple — full-width landscape portrait" loading="lazy" decoding="async">
+  <div class="home-collage" aria-label="Featured wedding collage">
+    <div class="home-collage__item">
+      <img src="images/IMG_8474.png" alt="Wedding photography collage image 1" loading="lazy" decoding="async">
+    </div>
+    <div class="home-collage__item">
+      <img src="images/IMG_8478.png" alt="Wedding photography collage image 2" loading="lazy" decoding="async">
+    </div>
+    <div class="home-collage__item">
+      <img src="images/IMG_8483.png" alt="Wedding photography collage image 3" loading="lazy" decoding="async">
+    </div>
+    <div class="home-collage__item">
+      <img src="images/IMG_8492.png" alt="Wedding photography collage image 4" loading="lazy" decoding="async">
+    </div>
   </div>
 
   <div class="site-content">
