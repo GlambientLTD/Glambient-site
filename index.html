@@ -177,6 +177,10 @@
       margin-block: var(--text-image-gap);
     }
 
+    .text-break--tight-top {
+      margin-top: clamp(0.75rem, 2vw, 1.8rem);
+    }
+
     .text-break .line {
       display: block;
       margin-bottom: 0.12em;
@@ -537,7 +541,7 @@
   </div>
 
   <div class="site-content">
-    <section class="text-break" aria-label="Secondary statement">
+    <section class="text-break text-break--tight-top" aria-label="Secondary statement">
       <span class="line">If you love</span>
       <span class="line">colourful and</span>
       <span class="line">vibrant</span>
