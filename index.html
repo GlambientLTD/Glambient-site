@@ -80,6 +80,7 @@
       --pad: clamp(1.2rem, 4vw, 3rem);
       --gap: clamp(0.6rem, 1.4vw, 1.2rem);
       --section-gap: clamp(3.4rem, 8.5vw, 9.5rem);
+      --text-image-gap: clamp(1.5rem, 4.2vw, 4.2rem);
     }
 
     * {
@@ -169,6 +170,11 @@
       text-transform: uppercase;
       letter-spacing: 0.02em;
       max-width: 14ch;
+    }
+
+    .text-break,
+    .testimonial {
+      margin-block: var(--text-image-gap);
     }
 
     .text-break .line {
