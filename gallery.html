@@ -25,136 +25,104 @@
     }
 
     .gallery-grid {
+      --cell-height: clamp(96px, 8vw, 132px);
       max-width: 1380px;
       margin: 0 auto;
-      padding: 30px 6vw 140px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      justify-content: center;
-      gap: 48px 30px;
+      padding: 30px clamp(1rem, 4vw, 3rem) 120px;
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-auto-rows: var(--cell-height);
+      gap: clamp(10px, 1.4vw, 18px);
+      grid-auto-flow: dense;
     }
-    .gallery-grid img {
-      width: clamp(220px, 30vw, 450px);
-      aspect-ratio: 4 / 5;
-      object-fit: cover;
+
+    .gallery-item {
+      margin: 0;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
       display: block;
-      border-radius: 6px;
-      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.12);
-      --offset-x: 0px;
-      --offset-y: 0px;
-      --hover-scale: 1;
-      transform: translate3d(var(--offset-x), var(--offset-y), 0) scale(var(--hover-scale));
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
-      background: #fff;
-      position: relative;
-      z-index: 1;
+      object-fit: cover;
+      transform: scale(1.04);
+      transform-origin: center;
+      transition: transform 0.35s ease;
     }
-    .gallery-grid img:is(:hover, :focus-visible) {
-      --hover-scale: 1.03;
-      box-shadow: 0 22px 42px rgba(0, 0, 0, 0.14);
+
+    .gallery-item:is(:hover, :focus-within) img {
+      transform: scale(1.08);
     }
-    .gallery-grid img:focus-visible {
-      outline: 2px solid #1a3d2b;
-      outline-offset: 3px;
-    }
-    .gallery-grid img:nth-child(6n + 1) {
-      width: clamp(240px, 27vw, 380px);
-      aspect-ratio: 3 / 4;
-      margin-top: 18px;
-      --offset-x: -30px;
-    }
-    .gallery-grid img:nth-child(6n + 2) {
-      width: clamp(300px, 40vw, 560px);
-      aspect-ratio: 5 / 3;
-      --offset-x: 34px;
-    }
-    .gallery-grid img:nth-child(6n + 3) {
-      width: clamp(240px, 28vw, 400px);
-      aspect-ratio: 4 / 5;
-      margin-top: -34px;
-      --offset-x: -14px;
-      z-index: 2;
-    }
-    .gallery-grid img:nth-child(6n + 4) {
-      width: clamp(320px, 42vw, 620px);
-      aspect-ratio: 3 / 2;
-      margin-top: 20px;
-      --offset-x: 56px;
-    }
-    .gallery-grid img:nth-child(6n + 5) {
-      width: clamp(220px, 25vw, 360px);
-      aspect-ratio: 2 / 3;
-      margin-top: -28px;
-      --offset-x: -48px;
-      z-index: 3;
-    }
-    .gallery-grid img:nth-child(6n + 6) {
-      width: clamp(270px, 31vw, 470px);
-      aspect-ratio: 16 / 10;
-      margin-top: 24px;
-      --offset-x: 16px;
-    }
-    @media (max-width: 900px) {
+
+    .gallery-item:nth-child(8n + 1) { grid-column: span 3; grid-row: span 4; }
+    .gallery-item:nth-child(8n + 2) { grid-column: span 6; grid-row: span 4; }
+    .gallery-item:nth-child(8n + 3) { grid-column: span 3; grid-row: span 4; }
+    .gallery-item:nth-child(8n + 4) { grid-column: span 4; grid-row: span 5; }
+    .gallery-item:nth-child(8n + 5) { grid-column: span 4; grid-row: span 5; }
+    .gallery-item:nth-child(8n + 6) { grid-column: span 4; grid-row: span 5; }
+    .gallery-item:nth-child(8n + 7) { grid-column: span 6; grid-row: span 4; }
+    .gallery-item:nth-child(8n) { grid-column: span 6; grid-row: span 4; }
+
+    @media (max-width: 1024px) {
       .gallery-grid {
-        gap: 30px 18px;
-        padding: 20px 5vw 90px;
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+        --cell-height: clamp(90px, 9vw, 120px);
+        padding-bottom: 90px;
       }
-      .gallery-grid img,
-      .gallery-grid img:nth-child(6n + 1),
-      .gallery-grid img:nth-child(6n + 2),
-      .gallery-grid img:nth-child(6n + 3),
-      .gallery-grid img:nth-child(6n + 4),
-      .gallery-grid img:nth-child(6n + 5),
-      .gallery-grid img:nth-child(6n + 6) {
-        width: clamp(200px, 43vw, 420px);
+
+      .gallery-item:nth-child(8n + 1),
+      .gallery-item:nth-child(8n + 3),
+      .gallery-item:nth-child(8n + 4),
+      .gallery-item:nth-child(8n + 5),
+      .gallery-item:nth-child(8n + 6) {
+        grid-column: span 4;
+        grid-row: span 4;
       }
-      .gallery-grid img:nth-child(3n + 1) {
-        aspect-ratio: 3 / 4;
-        --offset-x: -10px;
-        margin-top: 8px;
-      }
-      .gallery-grid img:nth-child(3n + 2) {
-        aspect-ratio: 5 / 3;
-        --offset-x: 12px;
-      }
-      .gallery-grid img:nth-child(3n) {
-        aspect-ratio: 4 / 5;
-        margin-top: -14px;
+
+      .gallery-item:nth-child(8n + 2),
+      .gallery-item:nth-child(8n + 7),
+      .gallery-item:nth-child(8n) {
+        grid-column: span 8;
+        grid-row: span 4;
       }
     }
-    @media (max-width: 560px) {
+
+    @media (max-width: 680px) {
       .gallery-grid {
-        display: block;
-        max-width: 440px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        --cell-height: 24vw;
         padding: 12px 16px 64px;
+        gap: 10px;
       }
-      .gallery-grid img,
-      .gallery-grid img:nth-child(6n + 1),
-      .gallery-grid img:nth-child(6n + 2),
-      .gallery-grid img:nth-child(6n + 3),
-      .gallery-grid img:nth-child(6n + 4),
-      .gallery-grid img:nth-child(6n + 5),
-      .gallery-grid img:nth-child(6n + 6),
-      .gallery-grid img:nth-child(3n + 1),
-      .gallery-grid img:nth-child(3n + 2),
-      .gallery-grid img:nth-child(3n) {
-        width: 100%;
-        margin: 0 0 18px;
-        --offset-x: 0px;
-        --offset-y: 0px;
-        aspect-ratio: auto;
+
+      .gallery-item,
+      .gallery-item:nth-child(8n + 1),
+      .gallery-item:nth-child(8n + 2),
+      .gallery-item:nth-child(8n + 3),
+      .gallery-item:nth-child(8n + 4),
+      .gallery-item:nth-child(8n + 5),
+      .gallery-item:nth-child(8n + 6),
+      .gallery-item:nth-child(8n + 7),
+      .gallery-item:nth-child(8n) {
+        grid-column: span 1;
+        grid-row: span 5;
       }
-      .gallery-header h1 { font-size: 1.6rem; }
+
+      .gallery-item:nth-child(4n + 2),
+      .gallery-item:nth-child(4n + 3) {
+        grid-row: span 4;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .gallery-grid img {
+      .gallery-item img {
         transition: none;
       }
 
-      .gallery-grid img:is(:hover, :focus-visible) {
-        --hover-scale: 1;
+      .gallery-item:is(:hover, :focus-within) img {
+        transform: scale(1.04);
       }
     }
   </style>
@@ -173,209 +141,93 @@
 
   <main>
     <div class="gallery-grid">
-        <img src="images/3-1.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-2.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-3.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-4.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/3-6.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-8.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-10.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-12.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-13.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/3-14.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-16.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-17.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-18.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-19.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-20.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-22.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-23.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-24.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-25.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-26.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-27.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-28.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-29.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-30.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-31.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-32.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-33.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-34.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-35.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-36.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-37.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-38.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-39.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-40.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-41.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-42.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-43.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-44.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-45.png" alt="Wedding photo" loading="lazy">
-        <img src="images/3-46.png" alt="Wedding photo" loading="lazy">
-        <img src="images/4-1.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-2.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-3.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-4.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-5.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-6.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-7.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-8.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-9.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-10.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-11.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-12.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-13.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-14.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-15.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-16.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-17.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-18.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-19.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-20.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-21.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-22.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-23.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-24.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/4-25.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-1.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-2.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-3.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-4.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-5.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-6.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-7.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-8.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-9.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-10.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-11.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-12.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-13.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-14.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-15.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-16.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-17.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-18.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-19.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-20.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-21.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-22.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-23.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-24.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-25.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-26.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-27.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-28.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-29.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-30.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/5-31.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-1.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-2.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-3.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-4.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-5.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-6.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-7.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-8.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-9.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-10.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-12.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-13.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-14.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-15.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-16.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-17.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-18.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-19.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-20.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-21.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-22.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-23.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-24.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-25.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-26.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-27.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-28.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-29.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-30.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-31.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-32.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-33.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-34.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-35.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-36.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-37.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-38.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-39.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-40.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-41.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-42.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-43.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-44.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-45.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-46.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-47.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-48.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-49.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-50.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-51.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-52.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-53.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-54.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-55.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-56.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-57.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-58.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-59.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-60.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-61.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-62.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-63.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-64.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-65.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-66.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-67.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-68.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-69.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-70.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-71.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-72.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-73.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-74.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-75.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-76.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-77.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-78.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-79.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-80.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-81.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-82.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-83.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-84.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-85.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-86.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-87.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-88.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-89.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/6-90.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-1.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-2.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-3.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-4.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-5.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-6.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-7.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-8.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-9.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-10.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-11.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-12.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-13.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-14.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-15.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-16.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/10-17.jpg" alt="Wedding photo" loading="lazy">
-        <img src="images/11-1.jpg" alt="Wedding photo" loading="lazy">
+        <figure class="gallery-item"><img src="images/DSC00028.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/DSC02076.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/DSC02760.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/DSC03656.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/DSC09616.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/DSC09956.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_7527.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_7763.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8439.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8443.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8447.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8449.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8450.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8455.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8457.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8458.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8464.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8465.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8468.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8474.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8475.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8478.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8483.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8484.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8485.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8487.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8488.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8489.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8490.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8492.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8496.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8497.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8499.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8500.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8501.png" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/IMG_8889.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-210.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-316.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-337.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-349.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-353.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-354.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-373.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-384.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-387.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-405.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-420.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-444.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-446.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-448.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-449.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-455.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-457.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-494.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JAMES&EMERALD-503.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-04234.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-04266.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-04372.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-04836.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-04883.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-04885.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-04955.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-05053.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-05129.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-05172.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-05246.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-05335.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-05718.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-05862.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-05976.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-06105.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-208511.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-209060.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-209062.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/JESSANDBENFINAL-209065.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/KAT&MARK-205.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/KAT&MARK-28.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/KAT&MARK-289.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/KAT&MARK-35.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/KAT&MARK-41.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/KAT&MARK-462.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/KAT&MARK-487.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/KAT&MARK-70.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/KAT&MARK-78.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/NATALIEANDCHRIS-395.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/NATALIEANDCHRIS-561.jpeg" alt="Wedding photo" loading="lazy"></figure>
+        <figure class="gallery-item"><img src="images/image1.jpeg" alt="Wedding photo" loading="lazy"></figure>
     </div>
   </main>
 
