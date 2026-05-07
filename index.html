@@ -326,6 +326,10 @@
       .mosaic-card img {
         transition: none;
       }
+
+      .jb-marquee__track {
+        animation: none;
+      }
     }
 
     /* ── JESS & BEN: full landscape hero banner ───────────── */
@@ -350,6 +354,43 @@
     .jb-duo {
       display: flex;
       align-items: flex-start;
+      position: relative;
+    }
+
+    .jb-marquee {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #fff;
+      overflow: hidden;
+      padding: 0.55rem 0;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .jb-marquee__track {
+      display: flex;
+      width: max-content;
+      animation: jbMarquee 16s linear infinite;
+    }
+
+    .jb-marquee__item {
+      flex: 0 0 auto;
+      padding-right: 2.4rem;
+      color: var(--accent);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: clamp(0.82rem, 1.8vw, 1.12rem);
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    @keyframes jbMarquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
     }
 
     .jb-duo__left {
@@ -427,6 +468,12 @@
     <div class="jb-duo">
       <div class="jb-duo__left">
         <img src="images/IMG_8464.png" alt="Wedding photography" loading="lazy" decoding="async">
+      </div>
+      <div class="jb-marquee" aria-hidden="true">
+        <div class="jb-marquee__track">
+          <span class="jb-marquee__item">GLAMBIENT * WEDDINGS * GLAMBIENT * WEDDINGS</span>
+          <span class="jb-marquee__item">GLAMBIENT * WEDDINGS * GLAMBIENT * WEDDINGS</span>
+        </div>
       </div>
       <div class="jb-duo__right">
         <img src="images/IMG_8465.png" alt="Wedding photography" loading="lazy" decoding="async">
