@@ -176,6 +176,26 @@
       margin-bottom: 0.12em;
     }
 
+    /* ── HOMEPAGE VIDEO SNIPPET ────────────────────────────── */
+    .home-video-snippet {
+      width: 100vw;
+      margin-left: 50%;
+      transform: translateX(-50%);
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .home-video-snippet iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
     /* ── MOSAIC COLLAGE ───────────────────────────────────── */
     .mosaic {
       display: grid;
@@ -420,10 +440,20 @@
     </section>
   </div>
 
+  <div class="home-video-snippet" aria-label="Catherine wedding video snippet">
+    <iframe
+      id="home-catherine-snippet"
+      src="https://player.vimeo.com/video/1131352277?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479#t=4m48s"
+      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      title="Catherine Wedding Snippet">
+    </iframe>
+  </div>
+
   <!-- ── TESTIMONIAL + CTA ──────────────────────────────── -->
   <div class="site-content">
     <section class="testimonial" aria-label="Client testimonial">
-      <p class="testimonial-quote">"Damn I always thought I was unphotogenic but you guys made me look so good!!"</p>
+      <p class="testimonial-quote">"damn I thought I was unphotogenic"</p>
     </section>
 
     <section class="text-break" aria-label="Secondary statement">
@@ -444,6 +474,47 @@
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+  <script src="https://player.vimeo.com/api/player.js"></script>
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const snippetFrame = document.getElementById("home-catherine-snippet");
+      if (!snippetFrame || !window.Vimeo || !window.Vimeo.Player) return;
+
+      const START_MINUTES = 4;
+      const START_SECONDS = 48;
+      const START_TIME_SECONDS = (START_MINUTES * 60) + START_SECONDS;
+      const SEEK_TOLERANCE_SECONDS = 0.35; // Buffer larger than callback granularity (~250ms) to avoid oscillating re-seeks near 4:48
+      const player = new window.Vimeo.Player(snippetFrame);
+      let isSeeking = false;
+
+      player.on("loaded", async () => {
+        try {
+          await player.setCurrentTime(START_TIME_SECONDS);
+          await player.play();
+        } catch (err) {
+          /* no-op */
+        }
+      });
+
+      player.on("ended", async () => {
+        try {
+          await player.setCurrentTime(START_TIME_SECONDS);
+          await player.play();
+        } catch (err) {
+          /* no-op */
+        }
+      });
+
+      player.on("timeupdate", ({ seconds }) => {
+        if (seconds < START_TIME_SECONDS - SEEK_TOLERANCE_SECONDS && !isSeeking) {
+          isSeeking = true;
+          player.setCurrentTime(START_TIME_SECONDS).catch(() => {}).finally(() => {
+            isSeeking = false;
+          });
+        }
+      });
+    });
+  </script>
   <script>
     window.addEventListener("DOMContentLoaded", () => {
       if (!window.gsap || !window.ScrollTrigger) return;
