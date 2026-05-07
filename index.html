@@ -481,7 +481,7 @@
       const START_MINUTES = 4;
       const START_SECONDS = 48;
       const START_TIME_SECONDS = (START_MINUTES * 60) + START_SECONDS;
-      const SEEK_TOLERANCE_SECONDS = 0.35; // Small buffer to prevent jitter from player timing drift
+      const SEEK_TOLERANCE_SECONDS = 0.35; // Buffer larger than callback granularity (~250ms) to avoid oscillating re-seeks near 4:48
       const player = new window.Vimeo.Player(snippetFrame);
       let isSeeking = false;
 
