@@ -77,6 +77,9 @@
       --bg: #ffffff;
       --text: #080808;
       --accent: #fff064;
+      --hero-blue: #1f4fbf;
+      --hero-neon-green: #39ff14;
+      --films-purple: #b300ff;
       --pad: clamp(1.2rem, 4vw, 3rem);
       --gap: clamp(0.6rem, 1.4vw, 1.2rem);
       --section-gap: clamp(3.4rem, 8.5vw, 9.5rem);
@@ -125,7 +128,7 @@
       letter-spacing: 0.02em;
       line-height: 0.9;
       font-size: clamp(2.2rem, 9vw, 8.4rem);
-      color: #1f4fbf;
+      color: var(--hero-blue);
     }
 
     .hero-copy .line {
@@ -133,7 +136,7 @@
     }
 
     .hero-copy__highlight {
-      color: #39ff14;
+      color: var(--hero-neon-green);
     }
 
     /* ── FULL-WIDTH LANDSCAPE BANNERS ─────────────────────── */
@@ -192,7 +195,7 @@
     }
 
     .text-break--films {
-      color: #b300ff;
+      color: var(--films-purple);
     }
 
     /* ── HOMEPAGE VIDEO SNIPPET ────────────────────────────── */
@@ -431,7 +434,7 @@
       flex: 0 0 auto;
       gap: 1.2rem;
       padding-right: 1.2rem;
-      color: #000;
+      color: var(--text);
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.14em;
