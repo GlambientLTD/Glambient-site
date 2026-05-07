@@ -522,7 +522,7 @@
   <div class="home-video-snippet" aria-label="Catherine wedding video snippet">
     <iframe
       id="home-catherine-snippet"
-      src="https://player.vimeo.com/video/1131352277?autoplay=1&amp;loop=1&amp;background=1&amp;controls=0&amp;autopause=0&amp;title=0&amp;byline=0&amp;portrait=0&amp;playsinline=1&amp;player_id=0&amp;app_id=58479#t=4m48s"
+      data-src="https://player.vimeo.com/video/1131352277?autoplay=1&amp;loop=1&amp;background=1&amp;controls=0&amp;autopause=0&amp;title=0&amp;byline=0&amp;portrait=0&amp;playsinline=1&amp;player_id=0&amp;app_id=58479#t=4m48s"
       allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
       referrerpolicy="strict-origin-when-cross-origin"
       title="Catherine Wedding Snippet">
@@ -561,16 +561,16 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
   <script src="https://player.vimeo.com/api/player.js"></script>
   <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      const snippetFrame = document.getElementById("home-catherine-snippet");
-      if (!snippetFrame || !window.Vimeo || !window.Vimeo.Player) return;
+    (function () {
+      const wrapper = document.querySelector(".home-video-snippet");
+      const frame   = document.getElementById("home-catherine-snippet");
+      if (!wrapper || !frame) return;
 
-      const START_MINUTES = 4;
-      const START_SECONDS = 48;
-      const START_TIME_SECONDS = (START_MINUTES * 60) + START_SECONDS;
+      const START_MINUTES         = 4;
+      const START_SECONDS         = 48;
+      const START_TIME_SECONDS    = (START_MINUTES * 60) + START_SECONDS;
       const SEEK_TOLERANCE_SECONDS = 0.35; // Buffer larger than callback granularity (~250ms) to avoid oscillating re-seeks near 4:48
-      const player = new window.Vimeo.Player(snippetFrame);
-      let isSeeking = false;
+
       const qualityScore = (qualityName = "") => {
         const normalized = String(qualityName).toLowerCase();
         if (normalized.includes("4k")) return 2160;
@@ -579,51 +579,90 @@
         return match ? Number(match[1]) : 0;
       };
 
-      const applyHighestAvailableQuality = async () => {
+      // Prefer 720p — looks great at ambient scale at roughly half the bitrate of 1080p+.
+      // Falls back to the next-lowest quality above 720p if 720p is unavailable.
+      const applyOptimalQuality = async (player) => {
         try {
           const qualities = await player.getQualities();
           if (!Array.isArray(qualities) || !qualities.length) return;
 
-          const bestQuality = [...qualities]
-            .sort((a, b) => qualityScore(b.id || b.label) - qualityScore(a.id || a.label))[0];
+          const scored = qualities.map(q => ({ q, score: qualityScore(q.id || q.label) }));
+          scored.sort((a, b) => a.score - b.score);
+          const target = scored.find(({ score }) => score >= 720) || scored[scored.length - 1];
 
-          if (bestQuality?.id) {
-            await player.setQuality(bestQuality.id);
-          }
+          if (target?.q?.id) await player.setQuality(target.q.id);
         } catch (err) {
           /* no-op */
         }
       };
 
-      player.on("loaded", async () => {
-        try {
-          await player.setMuted(true);
-          await applyHighestAvailableQuality();
-          await player.setCurrentTime(START_TIME_SECONDS);
-          await player.play();
-        } catch (err) {
-          /* no-op */
-        }
-      });
+      let initialised = false;
+      const initPlayer = () => {
+        if (initialised) return;
+        initialised = true;
 
-      player.on("ended", async () => {
-        try {
-          await player.setCurrentTime(START_TIME_SECONDS);
-          await player.play();
-        } catch (err) {
-          /* no-op */
-        }
-      });
+        // Inject the src now so the browser starts fetching only at this point
+        frame.src = frame.dataset.src;
 
-      player.on("timeupdate", ({ seconds }) => {
-        if (seconds < START_TIME_SECONDS - SEEK_TOLERANCE_SECONDS && !isSeeking) {
-          isSeeking = true;
-          player.setCurrentTime(START_TIME_SECONDS).catch(() => {}).finally(() => {
-            isSeeking = false;
+        const waitForVimeo = (cb) => {
+          if (window.Vimeo && window.Vimeo.Player) return cb();
+          const TIMEOUT_MS = 10000;
+          const start = Date.now();
+          const id = setInterval(() => {
+            if (window.Vimeo && window.Vimeo.Player) { clearInterval(id); cb(); return; }
+            if (Date.now() - start >= TIMEOUT_MS) { clearInterval(id); } // give up gracefully
+          }, 50);
+        };
+
+        waitForVimeo(() => {
+          const player    = new window.Vimeo.Player(frame);
+          let isSeeking   = false;
+
+          player.on("loaded", async () => {
+            try {
+              await player.setMuted(true);
+              await applyOptimalQuality(player);
+              await player.setCurrentTime(START_TIME_SECONDS);
+              await player.play();
+            } catch (err) {
+              /* no-op */
+            }
           });
-        }
-      });
-    });
+
+          player.on("ended", async () => {
+            try {
+              await player.setCurrentTime(START_TIME_SECONDS);
+              await player.play();
+            } catch (err) {
+              /* no-op */
+            }
+          });
+
+          player.on("timeupdate", ({ seconds }) => {
+            if (seconds < START_TIME_SECONDS - SEEK_TOLERANCE_SECONDS && !isSeeking) {
+              isSeeking = true;
+              player.setCurrentTime(START_TIME_SECONDS).catch(() => {}).finally(() => {
+                isSeeking = false;
+              });
+            }
+          });
+        });
+      };
+
+      // Lazy-init: start loading the video 400 px before it enters the viewport
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            observer.disconnect();
+            initPlayer();
+          }
+        }, { rootMargin: "0px 0px 400px 0px" });
+        observer.observe(wrapper);
+      } else {
+        // Older browser fallback — init immediately
+        initPlayer();
+      }
+    })();
   </script>
   <script>
     window.addEventListener("DOMContentLoaded", () => {
