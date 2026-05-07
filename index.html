@@ -77,6 +77,9 @@
       --bg: #ffffff;
       --text: #080808;
       --accent: #fff064;
+      --hero-blue: #1f4fbf;
+      --hero-neon-green: #39ff14;
+      --films-purple: #b300ff;
       --pad: clamp(1.2rem, 4vw, 3rem);
       --gap: clamp(0.6rem, 1.4vw, 1.2rem);
       --section-gap: clamp(3.4rem, 8.5vw, 9.5rem);
@@ -125,10 +128,15 @@
       letter-spacing: 0.02em;
       line-height: 0.9;
       font-size: clamp(2.2rem, 9vw, 8.4rem);
+      color: var(--hero-blue);
     }
 
     .hero-copy .line {
       display: block;
+    }
+
+    .hero-copy__highlight {
+      color: var(--hero-neon-green);
     }
 
     /* ── FULL-WIDTH LANDSCAPE BANNERS ─────────────────────── */
@@ -184,6 +192,10 @@
     .text-break .line {
       display: block;
       margin-bottom: 0.12em;
+    }
+
+    .text-break--films {
+      color: var(--films-purple);
     }
 
     /* ── HOMEPAGE VIDEO SNIPPET ────────────────────────────── */
@@ -422,7 +434,7 @@
       flex: 0 0 auto;
       gap: 1.2rem;
       padding-right: 1.2rem;
-      color: var(--accent);
+      color: var(--text);
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.14em;
@@ -499,8 +511,8 @@
       <span class="line">Editorial</span>
       <span class="line">meets candid.</span>
       <span class="line">Wedding</span>
-      <span class="line">photography</span>
-      <span class="line">&amp;&nbsp;film.</span>
+      <span class="line hero-copy__highlight">photography</span>
+      <span class="line">&amp;&nbsp;<span class="hero-copy__highlight">film.</span></span>
       <span class="line">UK&nbsp;based.</span>
       <span class="line">Available</span>
       <span class="line">worldwide.</span>
@@ -531,7 +543,7 @@
 
   <!-- ── EDITORIAL STATEMENT ───────────────────────────── -->
   <div class="site-content">
-    <section class="text-break" aria-label="Editorial statement">
+    <section class="text-break text-break--films" aria-label="Editorial statement">
       <span class="line">Our Films</span>
       <span class="line">= The Sentimental</span>
       <span class="line">Feeling Of A</span>
