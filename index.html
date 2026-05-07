@@ -377,8 +377,11 @@
     }
 
     .jb-marquee__item {
+      display: flex;
+      align-items: center;
       flex: 0 0 auto;
-      padding-right: 2.4rem;
+      gap: 1.2rem;
+      padding-right: 1.2rem;
       color: var(--accent);
       font-weight: 800;
       text-transform: uppercase;
@@ -471,8 +474,12 @@
       </div>
       <div class="jb-marquee" aria-hidden="true">
         <div class="jb-marquee__track">
-          <span class="jb-marquee__item">GLAMBIENT * WEDDINGS * GLAMBIENT * WEDDINGS *</span>
-          <span class="jb-marquee__item">GLAMBIENT * WEDDINGS * GLAMBIENT * WEDDINGS *</span>
+          <span class="jb-marquee__item">
+            <span>GLAMBIENT</span><span>*</span><span>WEDDINGS</span><span>*</span><span>GLAMBIENT</span><span>*</span><span>WEDDINGS</span><span>*</span>
+          </span>
+          <span class="jb-marquee__item">
+            <span>GLAMBIENT</span><span>*</span><span>WEDDINGS</span><span>*</span><span>GLAMBIENT</span><span>*</span><span>WEDDINGS</span><span>*</span>
+          </span>
         </div>
       </div>
       <div class="jb-duo__right">
